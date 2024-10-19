@@ -1,0 +1,81 @@
+%stock_data.txt:
+%1.00
+%3.00
+%2.50
+
+% This script reads stock prices from 'stock_data.txt'
+% creates a plot, and writes the results to a summary file.
+
+% a) Read the stock data from 'stock_data.txt'
+% We assume the file contains one stock price per line for 30 days
+
+% Load the stock prices from the text file
+stock_prices = load('stock_data.txt');  % 'stock_prices' is now a vector with the prices
+
+% b) Perform calculations on the stock data
+
+% Calculate the average closing price
+average_price = mean(stock_prices);  % Use 'mean' to get the average
+
+% Find the highest closing price
+highest_price = max(stock_prices);  % Use 'max' to find the highest value
+
+% Find the lowest closing price
+lowest_price = min(stock_prices);  % Use 'min' to find the lowest value
+
+% Count how many days the stock price increased compared to the previous day
+% 'diff' gives the difference between consecutive days, and we count the positive ones
+days_increased = sum(diff(stock_prices) > 0);  % Use 'diff' to calculate the differences
+
+% Print the results to the MATLAB command window
+fprintf('Average closing price: %.2f\n', average_price);
+fprintf('Highest closing price: %.2f\n', highest_price);
+fprintf('Lowest closing price: %.2f\n', lowest_price);
+fprintf('Number of days the stock price increased: %d\n', days_increased);
+
+% c) Create a line plot for the stock prices
+
+% Open a new figure for plotting
+figure;
+
+% Plot the daily stock prices as a line graph
+plot(stock_prices, '-o', 'DisplayName', 'Daily Closing Prices');  % Line with circles
+hold on;  % Keep the plot active to add more elements
+
+% Plot the average price as a horizontal line
+plot(1:length(stock_prices), average_price * ones(size(stock_prices)), '--', ...
+    'DisplayName', 'Average Price');
+
+% Plot the highest price as a horizontal line (in red)
+plot(1:length(stock_prices), highest_price * ones(size(stock_prices)), '--r', ...
+    'DisplayName', 'Highest Price');
+
+% Plot the lowest price as a horizontal line (in green)
+plot(1:length(stock_prices), lowest_price * ones(size(stock_prices)), '--g', ...
+    'DisplayName', 'Lowest Price');
+
+% Add title and axis labels
+title('Stock Prices Over 30 Days');  % Title for the plot
+xlabel('Day');  % Label for the x-axis (Days)
+ylabel('Closing Price');  % Label for the y-axis (Stock price)
+
+% Add a legend to explain the lines
+legend('show');  % Show the legend with line labels
+
+% Save the plot as an image file
+saveas(gcf, 'stock_analysis.png');  % Save the figure as 'stock_analysis.png'
+
+% d) Write a summary of the analysis to 'stock_summary.txt'
+
+% Open a new text file to write the summary
+fileID = fopen('stock_summary.txt', 'w');  % Open the file in write mode ('w')
+
+% Write the analysis results to the file
+fprintf(fileID, 'Stock Market Analysis Summary:\n');
+fprintf(fileID, 'Average closing price: %.2f\n', average_price);
+fprintf(fileID, 'Highest closing price: %.2f\n', highest_price);
+fprintf(fileID, 'Lowest closing price: %.2f\n', lowest_price);
+fprintf(fileID, 'Number of days the stock price increased: %d\n', days_increased);
+
+% Close the file after writing the summary
+fclose(fileID);
