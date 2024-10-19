@@ -1,0 +1,37 @@
+% weather_data.txt:
+%Date,Temperature,Humidity,Precipitation
+%2024-09-01,25.5,60,0
+%2024-09-02,26.0,65,5
+%2024-09-03,24.5,70,10
+%2024-09-04,23.0,75,15
+%2024-09-05,22.5,80,20
+
+
+
+% Read the data from 'weather_data.txt' into a cell array
+data = readcell('weather_data.txt', 'Delimiter', ',');  % Read data with delimiter as comma
+
+% Extract numerical data (skipping header row)
+temperature = cell2mat(data(2:end, 2));  % Column 2 for temperature
+humidity = cell2mat(data(2:end, 3));     % Column 3 for humidity
+precipitation = cell2mat(data(2:end, 4));% Column 4 for precipitation
+
+% Calculate the statistics
+average_temperature = mean(temperature);     % Average temperature
+average_humidity = mean(humidity);           % Average humidity
+total_precipitation = sum(precipitation);    % Total precipitation
+
+% Print statistics to command window
+fprintf('Average Temperature: %.2f°C\n', average_temperature);
+fprintf('Average Humidity: %.2f%%\n', average_humidity);
+fprintf('Total Precipitation: %.2f mm\n', total_precipitation);
+
+% Save the statistics to 'weather_summary.txt'
+fileID = fopen('weather_summary.txt', 'w');  % Open new file for writing
+fprintf(fileID, 'Weather Data Summary:\n');
+fprintf(fileID, 'Average Temperature: %.2f°C\n', average_temperature);
+fprintf(fileID, 'Average Humidity: %.2f%%\n', average_humidity);
+fprintf(fileID, 'Total Precipitation: %.2f mm\n', total_precipitation);
+fclose(fileID);  % Close the file
+
+disp('Weather summary has been saved to "weather_summary.txt".');
