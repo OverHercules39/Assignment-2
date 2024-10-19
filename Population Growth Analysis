@@ -1,0 +1,29 @@
+% Author Name: Jason Bennett
+% Email: Bennet97@rowan.edu
+% Course: MATLAB Programming - Fall 2024
+% Assignment: Assignment 2
+% Task: Population Growth Analysis
+% Date: 10/7/24
+
+%Create a row vector population
+population = [5000, 5200, 5350, 5600, 5800];
+
+%Calculate the year-over-year growth rate
+%Growth Rate =Present-Past/Past
+%Last 4 Values in the population array - first 4 values / first four
+growth_rate = (population(2:end) - population(1:end-1)) ./ population(1:end-1);
+
+%Create a 2x5 matrix pop_data
+pop_data = [population; [0 growth_rate]];
+
+%Use fprintf to print a formatted table
+%dashes in between column titles to act as dividers
+fprintf('Year / Population / Growth Rate\n');
+
+%for loop that repeats the number of years in the population row
+%Make i = the number of loops to show the year
+%print the pupulation number and data for the growth rate
+%add dashes in between the numbers to act as dividers for the columns
+for i = 1:length(population)
+    fprintf('%d / %d / %.2f%%\n', i, population(i), pop_data(2, i) * 100);
+end
