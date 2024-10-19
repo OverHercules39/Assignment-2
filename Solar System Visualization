@@ -1,0 +1,37 @@
+% Create the vectors for planet distances and planet sizes
+% Distances in astronomical units (AU) from the sun (1 AU = Earth distance from the sun)
+planet_distances = [0.39, 0.72, 1.00, 1.52, 5.20, 9.58, 19.22, 30.05]; % Mercury to Neptune
+
+% Planet sizes relative to Earth (Earth = 1)
+planet_sizes = [0.38, 0.95, 1.00, 0.53, 11.21, 9.45, 4.01, 3.88]; % Mercury to Neptune
+
+% Planet names for the legend and labels
+planet_names = {'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'};
+
+% Create a figure with two subplots
+
+% Open a new figure
+figure;
+
+% First subplot: Scatter plot of planet distances vs. sizes
+subplot(1, 2, 1);  % Create a subplot (1 row, 2 columns, 1st plot)
+scatter(planet_distances, planet_sizes, planet_sizes * 100, 'filled'); % Adjust marker size using planet sizes
+title('Planet Distances vs. Sizes');  % Title for the scatter plot
+xlabel('Distance from Sun (AU)');  % X-axis label
+ylabel('Relative Size (Earth = 1)');  % Y-axis label
+
+% Add a legend with planet names
+legend(planet_names, 'Location', 'northeastoutside');  % Place the legend outside the plot
+
+% Second subplot: Bar chart of planet distances
+subplot(1, 2, 2);  % Create a subplot (1 row, 2 columns, 2nd plot)
+bar(planet_distances);  % Bar chart of planet distances
+title('Planet Distances from the Sun');  % Title for the bar chart
+xlabel('Planets');  % X-axis label
+ylabel('Distance from Sun (AU)');  % Y-axis label
+
+% Use planet names as x-axis tick labels
+set(gca, 'xticklabel', planet_names);  % Set the x-tick labels to the planet names
+
+% Save the figure as 'solar_system_visualization.png'
+saveas(gcf, 'solar_system_visualization.png');  % Save the current figure
